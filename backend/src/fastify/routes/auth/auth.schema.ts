@@ -1,8 +1,8 @@
 import { Static, Type } from '@sinclair/typebox'
 
-export const AuthCredentials = Type.Object({
+export const AuthCredentialsSchema = Type.Object({
   email: Type.String({ format: 'email' }),
   password: Type.String(),
 })
 
-export type AuthCredentialsType = Static<typeof AuthCredentials>
+export type AuthCredentialsType = Static<typeof AuthCredentialsSchema>

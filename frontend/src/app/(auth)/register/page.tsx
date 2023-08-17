@@ -15,16 +15,22 @@ export default () => {
   const [info, setInfo] = useState('')
   const [error, setError] = useState('')
 
-  const submit = async () => {
+  const validateInputs = () => {
     if (!email || !password) {
-      setError('Provide credentials')
-      return
+      throw new Error('Provide credentials')
     }
     if (repeatPassword !== password) {
-      setError('Passwords do not match')
-      return
+      throw new Error('Passwords do not match')
     }
+
+    if (!RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i).test(email)) {
+      throw new Error('Invalid email format')
+    }
+  }
+
+  const submit = async () => {
     try {
+      validateInputs()
       const { message } = await (
         await fetch('http://localhost:4000/auth/register', {
           method: 'POST',
@@ -48,8 +54,8 @@ export default () => {
         }, 2000)
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Error occured')
-      console.error(error)
+      const e = error as Error
+      setError(e.message)
     }
   }
 
@@ -92,7 +98,9 @@ export default () => {
           onChange={({ target: { value } }) => setRepeatPassword(value)}
           style={{ marginBottom: '1rem' }}
         />
-        <Button onClick={submit}>Create account</Button>
+        <Button tabIndex={4} onClick={submit}>
+          Create account
+        </Button>
       </AuthFormCard>
     </MainContainer>
   )

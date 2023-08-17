@@ -1,2 +1,2 @@
 export * from './auth/auth'
-export * from './restricted/restricted'
+export * from './user/user'

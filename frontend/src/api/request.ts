@@ -5,7 +5,7 @@ export const request = (url: string, opts?: RequestInit, authToken?: string) => 
     headers: {
       ...opts?.headers,
       ...{
-        // cookie: `token=${authToken};path=/;expires=Session;SameSite=Strict`,
+        cookie: `token=${authToken};path=/;expires=Session;SameSite=Strict`,
       },
     },
   })

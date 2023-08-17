@@ -19,5 +19,6 @@ Application contains 4 'services' (and 2 DB's) split into two domains
 1. Create directory for postgres db volume `/data/db-postgres/`,
 2. Create directory for mongo db volume `/data/db-mongo/`,
 3. For each folder copy `.env.sample` and rename to `.env`, check values (if applicable),
-4. Run with `docker compose up -d`
-5. Use credentials from `docker-compose.yml` to connect to pgadmin on `localhost:5000` if needed :)
+4. Create test user in mongoDB (default credentials tester:test),
+5. Run with `docker compose up -d`
+6. Use credentials from `docker-compose.yml` to connect to pgadmin on `localhost:5000` if needed :)

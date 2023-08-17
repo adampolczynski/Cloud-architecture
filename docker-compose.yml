@@ -18,7 +18,7 @@ services:
     volumes:
       - ./backend-internal/:/usr/src/app
     ports:
-      - '4002:3000'
+      - '4002:4002'
     depends_on:
       postgres:
         condition: service_healthy

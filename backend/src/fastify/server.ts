@@ -2,7 +2,7 @@ import Fastify, { FastifyInstance } from 'fastify/fastify'
 import fastiftJwt from '@fastify/jwt'
 
 import cors from '@fastify/cors'
-import { restrictedRoutes, authRoutes } from './routes'
+import { userRoutes, authRoutes } from './routes'
 import fastifySession from '@fastify/session'
 import fastifyCookie from '@fastify/cookie'
 
@@ -57,7 +57,7 @@ export class FastifyAppManager {
     })
 
     this.app.register(authRoutes, { prefix: 'auth' })
-    this.app.register(restrictedRoutes, { prefix: 'restricted' })
+    this.app.register(userRoutes, { prefix: 'user' })
 
     // auth middleware
     this.app.addHook('onRequest', authHook)

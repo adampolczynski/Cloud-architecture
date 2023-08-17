@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 
-export const restrictedRoutes = (fastify: FastifyInstance, opts: {}, done: () => void) => {
+export const userRoutes = (fastify: FastifyInstance, opts: {}, done: () => void) => {
   fastify.get('/', async (request, reply) => {
     return reply.send(request.user)
   })
