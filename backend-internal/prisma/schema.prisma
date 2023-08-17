@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  uuid  String  @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name  String? @db.VarChar(255)
+  email String  @unique @db.VarChar(255)
+  block Block?
+}
+
+model Block {
+  id          Int          @id @default(autoincrement())
+  uuid        String       @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title       String?
+  description String?
+  status      status_enum? @default(to_do)
+  userId      Int          @unique
+  user        User         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum status_enum {
+  to_do
+  in_progress
+  in_review
+  done
+}
