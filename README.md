@@ -1,6 +1,6 @@
 ## Playing with architecture
 
-Application contains 4 'services' (and 2 DB's) split into two domains
+System contains 6 services (including 2 DB's) split into two domains
 
 ### User domain:
 
@@ -13,6 +13,8 @@ Application contains 4 'services' (and 2 DB's) split into two domains
 - `backend-internal` (modules: image, image-generator, orders), port 4002,
 - `frontend-admin` (pages: login, orders (to manage orders)), port 3001,
 - `postgreSQL` (tables: user, image, actions), port 5432
+
+![Screenshot from 2023-08-17 17-07-50](https://github.com/adampolczynski/Cloud-architecture/assets/25153606/4134d3dd-e7d2-4234-b977-e81f1245c748)
 
 ## Run locally:
 
