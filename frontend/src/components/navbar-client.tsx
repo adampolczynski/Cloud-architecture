@@ -1,6 +1,6 @@
 'use client'
 
-import { useProvideAuth } from '@/context/auth'
+import { request } from '@/api/request'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -11,17 +11,15 @@ const ROUTES = {
   Profile: '/user',
 }
 
-export const NavbarClient = () => {
-  const { authToken, signOut } = useProvideAuth()
-
+export const NavbarClient = ({ authToken }: { authToken?: string }) => {
   const actualPathname = usePathname()
 
-  const signOutUsingREST = async () => {
-    signOut('basic')
-  }
-
-  const signOutUsingGraphQL = () => {
-    signOut('graphql')
+  const signOut = async () => {
+    try {
+      await request('http://localhost:4000/user/logout')
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
@@ -48,14 +46,9 @@ export const NavbarClient = () => {
           )
         })}
         {authToken && (
-          <>
-            <button onClick={signOutUsingREST} type="button" className="btn btn-primary">
-              Logout (REST)
-            </button>
-            <button onClick={signOutUsingGraphQL} type="button" className="btn btn-primary">
-              Logout (GraphQL)
-            </button>
-          </>
+          <button onClick={signOut} type="button" className="btn btn-primary">
+            Logout
+          </button>
         )}
       </div>
     </div>

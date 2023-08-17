@@ -21,12 +21,10 @@ export default async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
-      {/* <AuthProvider> */}
       <body className={inter.className}>
         <Navbar user={user} />
         <MainContainer>{children}</MainContainer>
       </body>
-      {/* </AuthProvider> */}
     </html>
   )
 }

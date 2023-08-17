@@ -30,7 +30,7 @@ export const Navbar = ({ user }: { user?: User }) => {
             width: '30rem',
           }}
         >
-          <NavbarClient />
+          <NavbarClient authToken={authToken} />
         </div>
       </div>
     </nav>
