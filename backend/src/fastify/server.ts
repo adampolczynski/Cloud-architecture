@@ -59,7 +59,6 @@ export class FastifyAppManager {
     this.app.register(authRoutes, { prefix: 'auth' })
     this.app.register(userRoutes, { prefix: 'user' })
 
-    // auth middleware
     this.app.addHook('onRequest', authHook)
   }
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { request } from '@/api/request'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 

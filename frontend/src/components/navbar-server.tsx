@@ -4,7 +4,7 @@ import { NavbarClient } from './navbar-client'
 
 export const Navbar = ({ user }: { user?: User }) => {
   const authToken = cookies().get('token')?.value
-
+  console.log('server navbar re-render: ', authToken)
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">

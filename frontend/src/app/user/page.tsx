@@ -5,7 +5,15 @@ import { redirect } from 'next/navigation'
 
 export default async () => {
   const authToken = cookies().get('token')?.value
-  const user = await (await request('http://backend:4000/user', undefined, authToken)).json()
+  // const user = await (await request('http://backend:4000/user', undefined, authToken)).json()
+  const user = await (
+    await fetch('http://backend:4000/user', {
+      credentials: 'include',
+      // headers: {
+      //   cookie: `token=${authToken};path=/;expires=Session;SameSite=Strict`,
+      // },
+    })
+  ).json()
 
   //   const callRestrictedGraphQLQuery = async () => {
   //     setLoading(true)

@@ -1,19 +1,15 @@
-'use client'
 import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { useRouter } from 'next/navigation'
-import { AuthFormCard, MainContainer } from '@/components'
-import { useProvideAuth } from '@/context/auth'
 
-export default () => {
-  const router = useRouter()
+export const Login = () => {
+  // const router = useRouter()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const [error, setError] = useState('')
 
-  const { signIn } = useProvideAuth()
+  // const { signIn } = useProvideAuth()
 
   const validateInputs = () => {
     if (!email || !password) {
@@ -24,8 +20,8 @@ export default () => {
   const loginUsingGraphQL = async () => {
     try {
       validateInputs()
-      await signIn({ email, password }, 'graphql')
-      router.push('/')
+      // await signIn({ email, password }, 'graphql')
+      // router.push('/')
     } catch (error) {
       const e = error as Error
       setError(e.message)
@@ -35,8 +31,8 @@ export default () => {
   const loginUsingREST = async () => {
     try {
       validateInputs()
-      await signIn({ email, password }, 'basic')
-      router.push('/')
+      // await signIn({ email, password }, 'basic')
+      // router.push('/')
     } catch (error) {
       const e = error as Error
       setError(e.message)
@@ -48,9 +44,9 @@ export default () => {
   }, [email, password])
 
   return (
-    <MainContainer>
+    <div>
       {error ? <h3 style={{ color: 'orange' }}>{error}</h3> : null}
-      <AuthFormCard>
+      <div>
         <Form.Control
           tabIndex={1}
           type="email"
@@ -73,7 +69,7 @@ export default () => {
         <Button tabIndex={4} onClick={loginUsingGraphQL}>
           Login using GraphQL
         </Button>
-      </AuthFormCard>
-    </MainContainer>
+      </div>
+    </div>
   )
 }
