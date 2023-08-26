@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ImageGeneratorModule } from './image-generator/image-generator.module';
 import { ConfigModule } from '@nestjs/config';
+import { LogsModule } from './logs/logs.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: '.env',
     }),
     ImageGeneratorModule,
+    LogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

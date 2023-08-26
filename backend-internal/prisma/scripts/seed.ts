@@ -7,6 +7,11 @@ const randomString = (l?: number) => randomBytes(l || 20).toString('hex');
   DBConnectionManager.connect();
   const client = DBConnectionManager.getPrismaClient();
 
+  await client.admin_users.delete({
+    where: {
+      email: `admin@example.com`,
+    },
+  });
   await client.admin_users.create({
     data: {
       email: `admin@example.com`,
@@ -16,8 +21,9 @@ const randomString = (l?: number) => randomBytes(l || 20).toString('hex');
     },
   });
 
-  const amountToCreate = Math.round(Math.random() * 1000);
-  console.debug(`Seeding db with ${amountToCreate} records`);
+  console.debug(`(Re)-created test admin account`);
+  // const amountToCreate = Math.round(Math.random() * 1000);
+  // console.debug(`Seeding db with ${amountToCreate} records`);
 
   // for (const _ of Array(amountToCreate)) {
   //   const newEntry = {
