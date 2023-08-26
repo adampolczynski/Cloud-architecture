@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { User } from '../../../db/models/user'
+import { userService } from '../../services/user.service'
 import { AuthCredentialsSchema, AuthCredentialsType } from './auth.schema'
 
 export const authRoutes = (fastify: FastifyInstance, opts: {}, done: () => void) => {
@@ -14,18 +14,17 @@ export const authRoutes = (fastify: FastifyInstance, opts: {}, done: () => void)
     },
     async (request, reply) => {
       const { email, password } = request.body
-      const user = await User.findOne({ email })
+      const user = await userService.findOne({ email })
 
       if (!user) {
         return reply.status(401).send({ message: 'Email not found' })
       }
 
-      if (!(await user.comparePassword(password))) {
+      if (await userService.comparePasswords(user, password)) {
         return reply.status(401).send({ message: 'Invalid password' })
       }
 
       const token = fastify.jwt.sign({ _id: user._id })
-
       request.session.set('token', token)
       request.session.set('user', user)
 
@@ -49,12 +48,12 @@ export const authRoutes = (fastify: FastifyInstance, opts: {}, done: () => void)
     },
     async (request, reply) => {
       const { email, password } = request.body
-      const alreadyExists = await User.findOne({ email }).lean()
+      const alreadyExists = await userService.findOne({ email })
 
       if (alreadyExists) {
         return reply.status(401).send({ message: 'User already exists' })
       }
-      await User.create({ email, password })
+      await userService.create({ email, password })
       return reply.send({})
     }
   )

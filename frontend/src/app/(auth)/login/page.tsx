@@ -25,7 +25,7 @@ export default () => {
   const signIn = async () => {
     try {
       validateInputs()
-      const { statusCode, message } = await (
+      const { message } = await (
         await request('http://localhost:4000/auth/login', {
           method: 'POST',
           body: JSON.stringify({
@@ -37,10 +37,12 @@ export default () => {
           },
         })
       ).json()
-      if (statusCode > 300) {
-        throw new Error(message)
+
+      if (!message) {
+        router.push('/user')
+      } else {
+        setError(message)
       }
-      router.push('/user')
     } catch (error) {
       const e = error as Error
       setError(e.message)

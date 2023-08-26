@@ -1,11 +1,12 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { User } from '../../db/models/user'
+import { userService } from '../services/user.service'
 
 export const authHook = async (request: FastifyRequest, reply: FastifyReply) => {
   if (!request.url.includes('auth')) {
     try {
       const decodedJwt = request.server.jwt.decode<{ _id: string }>(request.cookies.token || '')
-      const user = await User.findOne({ _id: decodedJwt?._id }).lean()
+      const user = await userService.findOne({ _id: decodedJwt?._id })
+      console.log('auth hook: ', request.cookies.token, user)
       if (user) {
         request.user = JSON.parse(JSON.stringify(user))
       } else {
