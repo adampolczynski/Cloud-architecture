@@ -5,13 +5,13 @@ function StaticImplements<T>() {
     constructor;
   };
 }
-interface IPostgresConnectionManager {
+interface IDBConnectionManager {
   connect(): void;
   getPrismaClient(): PrismaClient;
 }
 
-@StaticImplements<IPostgresConnectionManager>()
-export class PostgresConnectionManager {
+@StaticImplements<IDBConnectionManager>()
+export class DBConnectionManager {
   private static prismaClient: PrismaClient;
 
   static async connect() {

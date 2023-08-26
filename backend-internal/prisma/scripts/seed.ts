@@ -1,28 +1,30 @@
 import { randomBytes } from 'crypto';
-import { PostgresConnectionManager } from '../index';
+import { DBConnectionManager } from '../index';
 
 const randomString = (l?: number) => randomBytes(l || 20).toString('hex');
 
 (async () => {
-  PostgresConnectionManager.connect();
-  const client = PostgresConnectionManager.getPrismaClient();
+  DBConnectionManager.connect();
+  const client = DBConnectionManager.getPrismaClient();
 
-  await client.user.create({
+  await client.admin_users.create({
     data: {
-      name: 'test',
-      email: `${randomString(8)}@example.com`,
+      email: `admin@example.com`,
+      firstName: `Steeve-${randomString(4)}`,
+      lastName: `Jobs-${randomString(4)}`,
+      password: 'password',
     },
   });
 
   const amountToCreate = Math.round(Math.random() * 1000);
   console.debug(`Seeding db with ${amountToCreate} records`);
 
-  for (const _ of Array(amountToCreate)) {
-    const newEntry = {
-      title: randomString(),
-      description: randomString(100),
-    };
-  }
+  // for (const _ of Array(amountToCreate)) {
+  //   const newEntry = {
+  //     title: randomString(),
+  //     description: randomString(100),
+  //   };
+  // }
 
   await client.$disconnect();
   console.debug(`Finished seeding`);

@@ -1,34 +1,39 @@
--- CreateEnum
-CREATE TYPE "status_enum" AS ENUM ('to_do', 'in_progress', 'in_review', 'done');
-
 -- CreateTable
-CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
-    "uuid" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "name" VARCHAR(255),
+CREATE TABLE "Admin_users" (
+    "id" VARCHAR(255) NOT NULL DEFAULT concat('au-', uuid_generate_v4()),
     "email" VARCHAR(255) NOT NULL,
+    "firstName" VARCHAR(255),
+    "lastName" VARCHAR(255),
+    "password" TEXT NOT NULL,
+    "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMPTZ(3) NOT NULL,
 
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Admin_users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Block" (
-    "id" SERIAL NOT NULL,
-    "uuid" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "title" TEXT,
-    "description" TEXT,
-    "status" "status_enum" DEFAULT 'to_do',
-    "userId" INTEGER NOT NULL,
+CREATE TABLE "Images" (
+    "id" VARCHAR(255) NOT NULL DEFAULT concat('img-', uuid_generate_v4()),
+    "uri" VARCHAR(255) NOT NULL,
+    "data" BYTEA,
+    "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMPTZ(3) NOT NULL,
 
-    CONSTRAINT "Block_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Images_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Logs" (
+    "id" VARCHAR(255) NOT NULL DEFAULT concat('log-', uuid_generate_v4()),
+    "error" BOOLEAN,
+    "message" TEXT,
+    "reference" JSONB,
+    "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMPTZ(3) NOT NULL,
+
+    CONSTRAINT "Logs_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Block_userId_key" ON "Block"("userId");
-
--- AddForeignKey
-ALTER TABLE "Block" ADD CONSTRAINT "Block_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+CREATE UNIQUE INDEX "Admin_users_email_key" ON "Admin_users"("email");
 

@@ -15,6 +15,7 @@
     "db:pull": "npx prisma db pull",
     "db:migrate:init-create": "npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > ./prisma/migrations/0_init/migration.sql",
     "db:migrate:init-resolve": "npx prisma migrate resolve --applied 0_init",
+    "db:migrate:init-deploy": "npx prisma migrate deploy",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",

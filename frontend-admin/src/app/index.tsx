@@ -3,7 +3,7 @@ import { RecoilRoot } from 'recoil'
 
 // import ErrorBoundary from '../ErrorBoundary'
 // import { NotFound } from '../NotFound'
-import { Login } from './login/login'
+import { Login } from '../login/login'
 
 const App: React.FC = () => (
   //   <ErrorBoundary>

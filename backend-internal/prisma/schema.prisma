@@ -7,27 +7,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  uuid  String  @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name  String? @db.VarChar(255)
-  email String  @unique @db.VarChar(255)
-  block Block?
+model Admin_users {
+  id         String  @id @default(dbgenerated("concat('au-', uuid_generate_v4())")) @db.VarChar(255)
+  email      String  @unique @db.VarChar(255)
+  firstName  String? @db.VarChar(255)
+  lastName   String? @db.VarChar(255)
+  password   String
+  createdAt  DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt  DateTime  @updatedAt @db.Timestamptz(3)
 }
 
-model Block {
-  id          Int          @id @default(autoincrement())
-  uuid        String       @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  title       String?
-  description String?
-  status      status_enum? @default(to_do)
-  userId      Int          @unique
-  user        User         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+model Images {
+  id   String @id @default(dbgenerated("concat('img-', uuid_generate_v4())")) @db.VarChar(255)
+  uri  String @db.VarChar(255)
+  data Bytes?
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(3)
 }
 
-enum status_enum {
-  to_do
-  in_progress
-  in_review
-  done
+model Logs {
+  id        String   @id @default(dbgenerated("concat('log-', uuid_generate_v4())")) @db.VarChar(255)
+  error     Boolean?
+  message   String?
+  reference Json?
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(3)
 }
